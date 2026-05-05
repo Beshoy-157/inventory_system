@@ -16,10 +16,3 @@ class System:
 
     def sell_product(self, product, qty):
         self.inventory.remove_product(product, qty)
-
-    def show_reports(self):
-        return self.inventory.get_transactions()
-
-    def search(self, name):
-        stock = self.inventory.get_stock()
-        return {k: v for k, v in stock.items() if name.lower() in k.lower()}

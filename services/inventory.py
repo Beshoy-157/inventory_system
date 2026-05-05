@@ -10,20 +10,14 @@ class Inventory:
         result = cursor.fetchone()
 
         if result:
-            cursor.execute(
-                "UPDATE products SET qty=? WHERE name=?",
-                (result[0] + qty, product.name)
-            )
+            cursor.execute("UPDATE products SET qty=? WHERE name=?",
+                           (result[0] + qty, product.name))
         else:
-            cursor.execute(
-                "INSERT INTO products (name, qty) VALUES (?, ?)",
-                (product.name, qty)
-            )
+            cursor.execute("INSERT INTO products (name, qty) VALUES (?, ?)",
+                           (product.name, qty))
 
-        cursor.execute(
-            "INSERT INTO transactions (name, qty, type) VALUES (?, ?, ?)",
-            (product.name, qty, "IN")
-        )
+        cursor.execute("INSERT INTO transactions (name, qty, type) VALUES (?, ?, ?)",
+                       (product.name, qty, "IN"))
 
         conn.commit()
         conn.close()
@@ -36,15 +30,11 @@ class Inventory:
         result = cursor.fetchone()
 
         if result and result[0] >= qty:
-            cursor.execute(
-                "UPDATE products SET qty=? WHERE name=?",
-                (result[0] - qty, product.name)
-            )
+            cursor.execute("UPDATE products SET qty=? WHERE name=?",
+                           (result[0] - qty, product.name))
 
-            cursor.execute(
-                "INSERT INTO transactions (name, qty, type) VALUES (?, ?, ?)",
-                (product.name, qty, "OUT")
-            )
+            cursor.execute("INSERT INTO transactions (name, qty, type) VALUES (?, ?, ?)",
+                           (product.name, qty, "OUT"))
 
         conn.commit()
         conn.close()

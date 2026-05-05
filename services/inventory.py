@@ -2,7 +2,6 @@ from utils.db import connect
 
 class Inventory:
 
-    # ➕ ADD
     def add_product(self, product, qty):
         conn = connect()
         cursor = conn.cursor()
@@ -11,10 +10,9 @@ class Inventory:
         result = cursor.fetchone()
 
         if result:
-            new_qty = result[0] + qty
             cursor.execute(
                 "UPDATE products SET qty=? WHERE name=?",
-                (new_qty, product.name)
+                (result[0] + qty, product.name)
             )
         else:
             cursor.execute(
@@ -22,7 +20,6 @@ class Inventory:
                 (product.name, qty)
             )
 
-        # transaction IN
         cursor.execute(
             "INSERT INTO transactions (name, qty, type) VALUES (?, ?, ?)",
             (product.name, qty, "IN")
@@ -31,7 +28,6 @@ class Inventory:
         conn.commit()
         conn.close()
 
-    # ➖ SELL
     def remove_product(self, product, qty):
         conn = connect()
         cursor = conn.cursor()
@@ -40,14 +36,11 @@ class Inventory:
         result = cursor.fetchone()
 
         if result and result[0] >= qty:
-            new_qty = result[0] - qty
-
             cursor.execute(
                 "UPDATE products SET qty=? WHERE name=?",
-                (new_qty, product.name)
+                (result[0] - qty, product.name)
             )
 
-            # transaction OUT
             cursor.execute(
                 "INSERT INTO transactions (name, qty, type) VALUES (?, ?, ?)",
                 (product.name, qty, "OUT")
@@ -56,7 +49,6 @@ class Inventory:
         conn.commit()
         conn.close()
 
-    # 📦 STOCK
     def get_stock(self):
         conn = connect()
         cursor = conn.cursor()
@@ -68,7 +60,6 @@ class Inventory:
 
         return {name: qty for name, qty in data}
 
-    # 🧾 TRANSACTIONS
     def get_transactions(self):
         conn = connect()
         cursor = conn.cursor()

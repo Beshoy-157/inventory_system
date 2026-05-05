@@ -1,6 +1,5 @@
 from services.inventory import Inventory
 
-
 class System:
     def __init__(self):
         self.inventory = Inventory()
@@ -10,11 +9,7 @@ class System:
         self.admin = (username, password)
 
     def login(self, username, password):
-        if self.admin == (username, password):
-            print("Login success ✅")
-            return True
-        print("Login failed ❌")
-        return False
+        return self.admin == (username, password)
 
     def add_stock(self, product, qty):
         self.inventory.add_product(product, qty)
@@ -23,8 +18,8 @@ class System:
         self.inventory.remove_product(product, qty)
 
     def show_reports(self):
-        self.inventory.show_transactions()
+        return self.inventory.get_transactions()
 
-    # 🔍 SEARCH
     def search(self, name):
-        self.inventory.search_product(name)
+        stock = self.inventory.get_stock()
+        return {k: v for k, v in stock.items() if name.lower() in k.lower()}

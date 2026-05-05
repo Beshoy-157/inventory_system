@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect
 from utils.db import init_db
 from services.system import System
 from models.product import Product
@@ -38,15 +38,11 @@ def dashboard():
     stock = system.inventory.get_stock()
     transactions = system.inventory.get_transactions()
 
-    total_products = len(stock)
-    total_quantity = sum(stock.values())
-    total_transactions = len(transactions)
-
     return render_template(
         "dashboard.html",
-        total_products=total_products,
-        total_quantity=total_quantity,
-        total_transactions=total_transactions
+        total_products=len(stock),
+        total_quantity=sum(stock.values()),
+        total_transactions=len(transactions)
     )
 
 
@@ -93,7 +89,7 @@ def transactions():
 
 
 # =========================
-# RUN SERVER (FOR RENDER + LOCAL)
+# RUN
 # =========================
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

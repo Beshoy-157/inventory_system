@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transactions</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+        }
+
+        .navbar {
+            background: #020617;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #020617;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background: #1e293b;
+        }
+
+        tr:nth-child(even) {
+            background: #0f172a;
+        }
+
+        .in {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .out {
+            color: #ef4444;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 🔝 NAVBAR -->
+    <div class="navbar">
+        <div>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/stock">Stock</a>
+            <a href="/transactions">Transactions</a>
+        </div>
+    </div>
+
+    <!-- 📦 CONTENT -->
+    <div class="container">
+        <h1>Transactions</h1>
+
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Type</th>
+            </tr>
+
+            {% for t in data %}
+            <tr>
+                <td>{{ t[0] }}</td>
+                <td>{{ t[1] }}</td>
+
+                {% if t[2] == "IN" %}
+                    <td class="in">IN</td>
+                {% else %}
+                    <td class="out">OUT</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</body>
+</html>

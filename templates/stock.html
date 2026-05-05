@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            margin-top: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background: #334155;
+        }
+
+        tr:nth-child(even) {
+            background: #0f172a;
+        }
+
+        tr:hover {
+            background: #334155;
+        }
+
+        .btn {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background: #22c55e;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>📦 Stock</h1>
+
+    <!-- 🔍 SEARCH -->
+    <input type="text" id="search" placeholder="Search product..." onkeyup="filterTable()">
+
+    <table id="stockTable">
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+        </tr>
+
+        {% for name, qty in data.items() %}
+        <tr>
+            <td>{{ name }}</td>
+            <td>{{ qty }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="/dashboard" class="btn">⬅ Back</a>
+</div>
+
+<script>
+function filterTable() {
+    let input = document.getElementById("search").value.toLowerCase();
+    let rows = document.querySelectorAll("#stockTable tr");
+
+    for (let i = 1; i < rows.length; i++) {
+        let product = rows[i].cells[0].innerText.toLowerCase();
+
+        if (product.includes(input)) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+}
+</script>
+
+</body>
+</html>

@@ -16,10 +16,7 @@ system.add_admin("admin", "1234")
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-
-        if system.login(username, password):
+        if system.login(request.form["username"], request.form["password"]):
             return redirect("/dashboard")
 
     return render_template("login.html")
@@ -63,3 +60,8 @@ def transactions():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
+@app.route("/index")
+def index():
+    return render_template("index.html")
+    return render_template("index.html")

@@ -1,7 +1,7 @@
 import sqlite3
 
 def connect():
-    return sqlite3.connect("inventory.db")
+    return sqlite3.connect("database.db")
 
 def init_db():
     conn = connect()
@@ -9,8 +9,7 @@ def init_db():
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS products (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
+        name TEXT PRIMARY KEY,
         qty INTEGER
     )
     """)
@@ -20,7 +19,7 @@ def init_db():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         qty INTEGER,
-        type TEXT
+        action_type TEXT
     )
     """)
 
